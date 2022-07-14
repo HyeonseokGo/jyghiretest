@@ -1,4 +1,4 @@
-package com.example.jyghiretest.detail
+package com.example.jyghiretest.product.detail
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

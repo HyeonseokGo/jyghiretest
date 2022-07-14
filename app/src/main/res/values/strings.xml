@@ -2,4 +2,6 @@
     <string name="app_name">jyghiretest</string>
     <string name="label_home">Home</string>
     <string name="label_product_detail">Product Detail</string>
+    <string name="label_favorite_products">Favorites</string>
+    <string name="label_product_home">List</string>
 </resources>

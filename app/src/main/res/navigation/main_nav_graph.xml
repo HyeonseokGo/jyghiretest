@@ -19,7 +19,7 @@
 
     <fragment
         android:id="@+id/productDetailFragment"
-        android:name="com.example.jyghiretest.detail.ProductDetailFragment"
+        android:name="com.example.jyghiretest.product.detail.ProductDetailFragment"
         android:label="@string/label_product_detail"
         tools:layout="@layout/fragment_product_detail"/>
 
