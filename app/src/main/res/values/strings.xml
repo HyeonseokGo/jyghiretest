@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">jyghiretest</string>
+    <string name="label_home">Home</string>
+    <string name="label_product_detail">Product Detail</string>
 </resources>
