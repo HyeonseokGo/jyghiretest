@@ -4,9 +4,11 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.jyghiretest.WhileUiSubscribed
 import com.example.jyghiretest.model.Category
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.stateIn
+import javax.inject.Inject
 
 private val SAMPLE_CATEGORIES = listOf(
     Category("0", "소"), Category("1", "돼지"),
@@ -15,7 +17,10 @@ private val SAMPLE_CATEGORIES = listOf(
     Category("6", "이유식"), Category("7", "밀키트")
 )
 
-class ProductHomeViewModel : ViewModel() {
+@HiltViewModel
+class ProductHomeViewModel @Inject constructor(
+
+) : ViewModel() {
 
     val state: StateFlow<ProductHomeState> = flow {
         emit(

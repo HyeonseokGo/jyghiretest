@@ -8,7 +8,9 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import com.example.jyghiretest.databinding.FragmentHomeBinding
 import com.google.android.material.tabs.TabLayoutMediator
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class HomeFragment : Fragment() {
 
     private var _binding: FragmentHomeBinding? = null
@@ -29,6 +31,11 @@ class HomeFragment : Fragment() {
         setUpTabLayout()
     }
 
+    override fun onDestroyView() {
+        _binding = null
+        super.onDestroyView()
+    }
+
     private fun setUpTabLayout() {
         TabLayoutMediator(binding.tabLayout, binding.viewpagerProducts) { tab, position ->
             tab.text =
@@ -39,11 +46,6 @@ class HomeFragment : Fragment() {
     private fun setUpViewPager() {
         binding.viewpagerProducts.isUserInputEnabled = false
         binding.viewpagerProducts.adapter = HomeFragmentsAdapter(this)
-    }
-
-    override fun onDestroyView() {
-        _binding = null
-        super.onDestroyView()
     }
 
 }

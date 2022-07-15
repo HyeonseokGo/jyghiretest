@@ -7,7 +7,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import com.example.jyghiretest.databinding.FragmentFavoriteProductsBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class FavoriteProductsFragment : Fragment() {
 
     private var _binding: FragmentFavoriteProductsBinding? = null

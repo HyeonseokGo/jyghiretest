@@ -9,7 +9,9 @@ import androidx.fragment.app.viewModels
 import com.example.jyghiretest.databinding.FragmentProductHomeBinding
 import com.example.jyghiretest.safeCollect
 import com.google.android.material.tabs.TabLayoutMediator
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class ProductHomeFragment : Fragment() {
 
     private var _binding: FragmentProductHomeBinding? = null
@@ -36,6 +38,11 @@ class ProductHomeFragment : Fragment() {
         observeViewModel()
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
     private fun observeViewModel() {
         viewModel.state.safeCollect(viewLifecycleOwner) {
             val categories = it.categories
@@ -48,16 +55,11 @@ class ProductHomeFragment : Fragment() {
         binding.viewpagerCategories.adapter = categoriesAdapter
     }
 
+
     private fun setUpTabLayout() {
         TabLayoutMediator(binding.tabLayout, binding.viewpagerCategories) { tab, position ->
             tab.text = categoriesAdapter.getTitleByPosition(position)
         }.attach()
-    }
-
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 
     companion object {
