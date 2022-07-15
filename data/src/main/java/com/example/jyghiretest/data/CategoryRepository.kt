@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 interface CategoryRepository {
-    suspend fun observeCategories(): Flow<List<Category>>
+    fun observeCategories(): Flow<List<Category>>
 }
 
 
@@ -19,7 +19,7 @@ class DefaultCategoryRepository @Inject constructor(
     private val dispatcherProvider: DispatcherProvider
 ) : CategoryRepository {
 
-    override suspend fun observeCategories(): Flow<List<Category>> {
+    override fun observeCategories(): Flow<List<Category>> {
         return dao.getAll().map {
             it.map { entity ->
                 entity.toModel()

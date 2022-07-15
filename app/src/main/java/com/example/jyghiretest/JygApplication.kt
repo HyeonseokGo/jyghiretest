@@ -12,6 +12,14 @@ class JygApplication : Application(), Configuration.Provider {
     @Inject
     lateinit var workerFactory: HiltWorkerFactory
 
+    @Inject
+    lateinit var appInitializer: AppInitializer
+
+    override fun onCreate() {
+        super.onCreate()
+        appInitializer.initialize()
+    }
+
     override fun getWorkManagerConfiguration(): Configuration {
         return Configuration.Builder()
             .setWorkerFactory(workerFactory)

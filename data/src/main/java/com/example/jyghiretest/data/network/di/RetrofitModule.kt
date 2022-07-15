@@ -1,6 +1,6 @@
 package com.example.jyghiretest.data.network.di
 
-import com.example.jyghiretest.data.API_URL
+import com.example.jyghiretest.data.utils.API_URL
 import com.example.jyghiretest.data.network.JygApi
 import dagger.Module
 import dagger.Provides

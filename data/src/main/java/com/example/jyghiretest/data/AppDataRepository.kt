@@ -1,5 +1,6 @@
 package com.example.jyghiretest.data
 
+import android.util.Log
 import com.example.jyghiretest.data.database.CategoryDao
 import com.example.jyghiretest.data.database.ProductDao
 import com.example.jyghiretest.data.di.CategoryDatabaseSyncer
@@ -10,7 +11,7 @@ import com.example.jyghiretest.data.network.model.ProductResponse
 import com.example.jyghiretest.data.utils.Syncable
 import javax.inject.Inject
 
-interface AppDataRepository
+interface AppDataRepository: Syncable
 
 class DefaultAppDataRepository @Inject constructor(
     private val categoryDatabaseSyncer: CategoryDatabaseSyncer,
@@ -18,18 +19,17 @@ class DefaultAppDataRepository @Inject constructor(
     private val categoryDao: CategoryDao,
     private val productDao: ProductDao,
     private val appDataFetcher: AppDataFetcher
-) : AppDataRepository, Syncable {
+) : AppDataRepository {
 
-    override suspend fun sync() {
-        kotlin.runCatching {
+    override suspend fun sync(): Result<Unit> {
+        return kotlin.runCatching {
+            Log.e(this::class.simpleName, "fetch()")
             appDataFetcher.fetch()
         }.onSuccess {
             val (categories, products) = it
             syncCategory(categories)
             syncProduct(products)
-        }.onFailure {
-
-        }
+        }.map {}
     }
 
     private suspend fun syncCategory(newItems: List<CategoryResponse>) {
