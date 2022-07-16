@@ -6,7 +6,6 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.WhileSubscribed
 import kotlinx.coroutines.launch
 
 fun <T> Flow<T>.safeCollect(
@@ -22,3 +21,4 @@ fun <T> Flow<T>.safeCollect(
 }
 
 val WhileUiSubscribed = SharingStarted.WhileSubscribed(5_000)
+

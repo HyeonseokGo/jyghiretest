@@ -4,8 +4,6 @@ import android.content.Context
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import app.cash.turbine.test
-import com.example.jyghiretest.data.DefaultProductRepository
-import com.example.jyghiretest.data.ProductRepository
 import com.example.jyghiretest.data.TestDispatcherRule
 import com.example.jyghiretest.data.database.JygDatabase
 import com.example.jyghiretest.data.database.ProductDao
@@ -46,16 +44,16 @@ class ProductRepositoryTest {
         val categoryKey = "testKey"
         val entities = listOf(
             ProductEntity(
-                key = "0", categoryKey = categoryKey, name = "0", price = 1000, liked = true
+                key = "0", categoryKey = categoryKey, name = "0", price = 1000, isFavorite = true
             ),
             ProductEntity(
-                key = "1", categoryKey = categoryKey, name = "0", price = 1000, liked = true
+                key = "1", categoryKey = categoryKey, name = "0", price = 1000, isFavorite = true
             ),
             ProductEntity(
-                key = "2", categoryKey = "not", name = "0", price = 1000, liked = true
+                key = "2", categoryKey = "not", name = "0", price = 1000, isFavorite = true
             ),
             ProductEntity(
-                key = "3", categoryKey = categoryKey, name = "0", price = 1000, liked = true
+                key = "3", categoryKey = categoryKey, name = "0", price = 1000, isFavorite = true
             )
         )
         productDao.insertAll(*entities.toTypedArray())
@@ -71,20 +69,20 @@ class ProductRepositoryTest {
         val categoryKey = "testKey"
         val entities = listOf(
             ProductEntity(
-                key = "0", categoryKey = categoryKey, name = "0", price = 1000, liked = true
+                key = "0", categoryKey = categoryKey, name = "0", price = 1000, isFavorite = true
             ),
             ProductEntity(
-                key = "1", categoryKey = categoryKey, name = "0", price = 1000, liked = true
+                key = "1", categoryKey = categoryKey, name = "0", price = 1000, isFavorite = true
             ),
             ProductEntity(
-                key = "2", categoryKey = "not", name = "0", price = 1000, liked = true
+                key = "2", categoryKey = "not", name = "0", price = 1000, isFavorite = true
             ),
             ProductEntity(
-                key = "3", categoryKey = categoryKey, name = "0", price = 1000, liked = true
+                key = "3", categoryKey = categoryKey, name = "0", price = 1000, isFavorite = true
             )
         )
         val entityToInsert = ProductEntity(
-            key = "5", categoryKey = categoryKey, name = "0", price = 1000, liked = true
+            key = "5", categoryKey = categoryKey, name = "0", price = 1000, isFavorite = true
 
         )
         productDao.insertAll(*entities.toTypedArray())
@@ -101,16 +99,16 @@ class ProductRepositoryTest {
         val categoryKey = "testKey"
         val entities = listOf(
             ProductEntity(
-                key = "0", categoryKey = categoryKey, name = "0", price = 1000, liked = true
+                key = "0", categoryKey = categoryKey, name = "0", price = 1000, isFavorite = true
             ),
             ProductEntity(
-                key = "1", categoryKey = categoryKey, name = "0", price = 1000, liked = true
+                key = "1", categoryKey = categoryKey, name = "0", price = 1000, isFavorite = true
             ),
             ProductEntity(
-                key = "2", categoryKey = "not", name = "0", price = 1000, liked = true
+                key = "2", categoryKey = "not", name = "0", price = 1000, isFavorite = true
             ),
             ProductEntity(
-                key = "3", categoryKey = categoryKey, name = "0", price = 1000, liked = true
+                key = "3", categoryKey = categoryKey, name = "0", price = 1000, isFavorite = true
             )
         )
         productDao.insertAll(*entities.toTypedArray())
@@ -126,16 +124,16 @@ class ProductRepositoryTest {
         val categoryKey = "testKey"
         val entities = listOf(
             ProductEntity(
-                key = "0", categoryKey = categoryKey, name = "0", price = 1000, liked = true
+                key = "0", categoryKey = categoryKey, name = "0", price = 1000, isFavorite = true
             ),
             ProductEntity(
-                key = "1", categoryKey = categoryKey, name = "0", price = 1000, liked = true
+                key = "1", categoryKey = categoryKey, name = "0", price = 1000, isFavorite = true
             ),
             ProductEntity(
-                key = "2", categoryKey = "not", name = "0", price = 1000, liked = true
+                key = "2", categoryKey = "not", name = "0", price = 1000, isFavorite = true
             ),
             ProductEntity(
-                key = "3", categoryKey = categoryKey, name = "0", price = 1000, liked = true
+                key = "3", categoryKey = categoryKey, name = "0", price = 1000, isFavorite = true
             )
         )
 

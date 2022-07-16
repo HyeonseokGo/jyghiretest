@@ -20,7 +20,7 @@ class ProductsByCategoryFragment : Fragment() {
 
     private val viewModel: ProductsByCategoryViewModel by viewModels()
 
-    private lateinit var adapter: ProductsByCategoryAdapter
+    private lateinit var adapter: ProductItemAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -43,9 +43,9 @@ class ProductsByCategoryFragment : Fragment() {
     }
 
     private fun setUpRecyclerView() {
-        adapter = ProductsByCategoryAdapter(
+        adapter = ProductItemAdapter(
             onItemClick = {},
-            onFavoriteClick = {}
+            onFavoriteClick = viewModel::toggleFavorite
         )
         binding.recyclerViewProducts.adapter = adapter
     }

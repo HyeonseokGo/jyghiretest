@@ -4,8 +4,6 @@ import android.content.Context
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import app.cash.turbine.test
-import com.example.jyghiretest.data.CategoryRepository
-import com.example.jyghiretest.data.DefaultCategoryRepository
 import com.example.jyghiretest.data.TestDispatcherRule
 import com.example.jyghiretest.data.database.CategoryDao
 import com.example.jyghiretest.data.database.JygDatabase

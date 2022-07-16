@@ -32,5 +32,7 @@ interface ProductDao {
     @Query("SELECT * FROM productentity WHERE :categoryKey = category_key")
     fun getByCategory(categoryKey: String): Flow<List<ProductEntity>>
 
+    @Query("SELECT * FROM productentity WHERE name LIKE '%' || :keyword || '%' AND isFavorite")
+    fun searchFavoriteProducts(keyword: String): Flow<List<ProductEntity>>
 
 }

@@ -3,8 +3,6 @@ package com.example.jyghiretest.data.repository
 import android.content.Context
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
-import com.example.jyghiretest.data.AppDataRepository
-import com.example.jyghiretest.data.DefaultAppDataRepository
 import com.example.jyghiretest.data.TestDispatcherRule
 import com.example.jyghiretest.data.database.CategoryDao
 import com.example.jyghiretest.data.database.JygDatabase
@@ -66,7 +64,7 @@ class AppDataRepositoryTest {
     @Test
     fun test_delete_all_after_sync() = runTest {
         val productEntity1 = ProductEntity(
-            key = "key0", categoryKey = "C0", name = "product1", price = 1000, liked = false
+            key = "key0", categoryKey = "C0", name = "product1", price = 1000, isFavorite = false
         )
         val categoryEntity1 = CategoryEntity(key = "C0", name = "category1")
         categoryDao.insert(categoryEntity1)
@@ -97,7 +95,7 @@ class AppDataRepositoryTest {
                 categoryKey = categoryKey[index],
                 name = "name$s",
                 price = index * 1000,
-                liked = false
+                isFavorite = false
             )
         }
 
@@ -143,7 +141,7 @@ class AppDataRepositoryTest {
                 categoryKey = "categoryKey$it",
                 name = "name$it",
                 price = 100,
-                liked = true
+                isFavorite = true
             )
         }
         val productResponse = keys.map {
@@ -164,22 +162,22 @@ class AppDataRepositoryTest {
         productDao.getAllImmediately().also { list ->
             list.all { it.price == 1000 }
             list.all { it.name == "changed" }
-            list.all { it.liked }
+            list.all { it.isFavorite }
         }
     }
 
     @Test
-    fun test_product_like_not_changes() = runTest {
-        val productKeysLikeChanges = listOf("0", "2", "4")
-        val productKeysLikeNotChanges = listOf("1", "3")
-        val keys = productKeysLikeChanges + productKeysLikeNotChanges
+    fun test_product_isFavorite_not_changes() = runTest {
+        val productKeysIsFavoriteChanges = listOf("0", "2", "4")
+        val productKeysIsFavoriteNotChanges = listOf("1", "3")
+        val keys = productKeysIsFavoriteChanges + productKeysIsFavoriteNotChanges
         val productEntities = keys.sorted().map {
             ProductEntity(
                 key = it,
                 name = "name$it",
                 categoryKey = "categoryKey$it",
                 price = 100,
-                liked = productKeysLikeChanges.contains(it)
+                isFavorite = productKeysIsFavoriteChanges.contains(it)
             )
         }
 
@@ -196,8 +194,8 @@ class AppDataRepositoryTest {
         repository.sync()
 
         productDao.getAllImmediately().also { list ->
-            list.filter { productKeysLikeChanges.contains(it.key) }.all { it.liked }
-            list.filter { productKeysLikeNotChanges.contains(it.key) }.none { it.liked }
+            list.filter { productKeysIsFavoriteChanges.contains(it.key) }.all { it.isFavorite }
+            list.filter { productKeysIsFavoriteNotChanges.contains(it.key) }.none { it.isFavorite }
         }
     }
 

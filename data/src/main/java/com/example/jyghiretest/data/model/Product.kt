@@ -9,6 +9,6 @@ fun ProductEntity.toModel(): Product {
         name = name,
         categoryKey = categoryKey,
         price = price,
-        liked = liked
+        isFavorite = isFavorite
     )
 }

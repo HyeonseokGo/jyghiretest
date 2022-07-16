@@ -10,7 +10,7 @@ import com.example.jyghiretest.R
 import com.example.jyghiretest.databinding.ItemProductBinding
 import com.example.jyghiretest.model.Product
 
-class ProductsByCategoryAdapter(
+class ProductItemAdapter(
     private val onItemClick: (key: String) -> Unit,
     private val onFavoriteClick: (key: String) -> Unit,
 ) : ListAdapter<Product, ProductsByCategoryViewHolder>(ProductItemDiffUtil) {
@@ -45,7 +45,7 @@ class ProductsByCategoryViewHolder(
         binding.textViewProductName.text = item.name
 
         val drawableRes =
-            if (item.liked) R.drawable.ic_baseline_favorite_checked_24 else R.drawable.ic_baseline_favorite_unchecked_24
+            if (item.isFavorite) R.drawable.ic_baseline_favorite_checked_24 else R.drawable.ic_baseline_favorite_unchecked_24
         val drawable = ContextCompat.getDrawable(binding.root.context, drawableRes)
         binding.imageButtonFavorite.setImageDrawable(drawable)
         binding.imageButtonFavorite.setOnClickListener {

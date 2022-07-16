@@ -1,6 +1,5 @@
 package com.example.jyghiretest.data.utils
 
-import com.example.jyghiretest.data.database.CategoryDao
 import com.example.jyghiretest.data.database.ProductDao
 import com.example.jyghiretest.data.database.entity.CategoryEntity
 import com.example.jyghiretest.data.database.entity.ProductEntity
@@ -51,14 +50,14 @@ class ProductResponseToEntity @Inject constructor(
 ): Mapper<ProductResponse, ProductEntity> {
     override suspend fun invoke(from: ProductResponse): ProductEntity {
         val productEntity = productDao.get(from.key)
-        val liked = productEntity?.liked ?: false
+        val liked = productEntity?.isFavorite ?: false
 
         return ProductEntity(
             key = from.key,
             categoryKey = from.categoryKey,
             name = from.name,
             price = from.price,
-            liked = liked
+            isFavorite = liked
         )
     }
 }

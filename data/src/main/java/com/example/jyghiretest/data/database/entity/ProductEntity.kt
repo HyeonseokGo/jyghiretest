@@ -20,6 +20,6 @@ data class ProductEntity(
     @ColumnInfo(name = "price")
     val price: Int,
 
-    @ColumnInfo(name = "liked")
-    val liked: Boolean
+    @ColumnInfo(name = "isFavorite")
+    val isFavorite: Boolean
 )

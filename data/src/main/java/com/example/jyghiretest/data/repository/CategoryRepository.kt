@@ -1,4 +1,4 @@
-package com.example.jyghiretest.data
+package com.example.jyghiretest.data.repository
 
 import com.example.jyghiretest.data.database.CategoryDao
 import com.example.jyghiretest.data.model.toModel

@@ -1,6 +1,6 @@
 package com.example.jyghiretest.data.di
 
-import com.example.jyghiretest.data.*
+import com.example.jyghiretest.data.repository.*
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -30,5 +30,11 @@ interface RepositoryModule {
     fun bindAppDataRepository(
         appDataRepository: DefaultAppDataRepository
     ): AppDataRepository
+
+    @Binds
+    @Singleton
+    fun bindFavoriteRepository(
+        favoriteRepository: DefaultFavoriteRepository
+    ): FavoriteRepository
 
 }
