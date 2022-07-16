@@ -24,6 +24,6 @@ object DispatcherModule {
 
 data class DispatcherProvider(
     val io: CoroutineDispatcher,
-    val main: MainCoroutineDispatcher
+    val main: CoroutineDispatcher
 )
 

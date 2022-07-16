@@ -1,4 +1,4 @@
-package com.example.jyghiretest.data
+package com.example.jyghiretest.data.testdoubles
 
 import com.example.jyghiretest.data.database.entity.CategoryEntity
 import com.example.jyghiretest.data.network.model.CategoryResponse

@@ -9,13 +9,17 @@ import retrofit2.HttpException
 import javax.inject.Inject
 import javax.inject.Singleton
 
-@Singleton
-class AppDataFetcher @Inject constructor(
+interface AppDataFetcher {
+    suspend fun fetch(): ProductListResponse
+}
+
+
+class RetrofitAppDataFetcher @Inject constructor(
     private val api: JygApi,
     private val dispatcherProvider: DispatcherProvider
-) {
+) : AppDataFetcher {
 
-    suspend fun fetch(): ProductListResponse = withContext(dispatcherProvider.io) {
+    override suspend fun fetch(): ProductListResponse = withContext(dispatcherProvider.io) {
         val response = api.getAppData()
         response.body() ?: throw HttpException(response)
     }

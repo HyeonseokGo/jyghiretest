@@ -48,7 +48,6 @@ class ProductResponseToKey @Inject constructor(): Mapper<ProductResponse, String
 
 class ProductResponseToEntity @Inject constructor(
     private val productDao: ProductDao,
-    private val categoryDao: CategoryDao,
 ): Mapper<ProductResponse, ProductEntity> {
     override suspend fun invoke(from: ProductResponse): ProductEntity {
         val productEntity = productDao.get(from.key)

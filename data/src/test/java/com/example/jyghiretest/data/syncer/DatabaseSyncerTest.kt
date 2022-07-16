@@ -2,9 +2,9 @@ package com.example.jyghiretest.data.syncer
 
 import com.example.jyghiretest.data.database.entity.CategoryEntity
 import com.example.jyghiretest.data.di.CategoryDatabaseSyncer
-import com.example.jyghiretest.data.fakeCategoryResponses
+import com.example.jyghiretest.data.testdoubles.fakeCategoryResponses
 import com.example.jyghiretest.data.network.model.CategoryResponse
-import com.example.jyghiretest.data.toEntities
+import com.example.jyghiretest.data.testdoubles.toEntities
 import com.example.jyghiretest.data.utils.CategoryEntityToKey
 import com.example.jyghiretest.data.utils.CategoryResponseToEntity
 import com.example.jyghiretest.data.utils.CategoryResponseToKey
