@@ -21,7 +21,7 @@ class DefaultFavoriteRepository @Inject constructor(
 ) : FavoriteRepository {
 
     override suspend fun toggleFavorite(key: String) {
-        val productEntity = productDao.get(key) ?: return
+        val productEntity = productDao.getImmediately(key) ?: return
         val toggled = !productEntity.isFavorite
         productDao.update(productEntity.copy(isFavorite = toggled))
     }

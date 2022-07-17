@@ -1,9 +1,9 @@
 package com.example.jyghiretest.home
 
-import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
 
-class HomeFragmentsAdapter(fragment: Fragment) : FragmentStateAdapter(fragment) {
+class HomeFragmentsAdapter(fragmentActivity: FragmentActivity) : FragmentStateAdapter(fragmentActivity) {
 
     override fun getItemCount() = HomeViewPagerFragments.values().size
 

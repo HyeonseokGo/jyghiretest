@@ -16,3 +16,4 @@ rootProject.name = "jyghiretest"
 include ':app'
 include ':model'
 include ':data'
+include ':data-test'

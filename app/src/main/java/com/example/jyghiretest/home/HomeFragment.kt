@@ -45,7 +45,7 @@ class HomeFragment : Fragment() {
 
     private fun setUpViewPager() {
         binding.viewpagerProducts.isUserInputEnabled = false
-        binding.viewpagerProducts.adapter = HomeFragmentsAdapter(this)
+        binding.viewpagerProducts.adapter = HomeFragmentsAdapter(requireActivity())
     }
 
 }

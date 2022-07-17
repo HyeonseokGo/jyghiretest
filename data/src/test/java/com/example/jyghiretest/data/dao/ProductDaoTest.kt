@@ -32,7 +32,7 @@ class ProductDaoTest {
         productDao.insert(
             ProductEntity("0", "", "", 0, false)
         )
-        assert(productDao.get("0") != null)
+        assert(productDao.getImmediately("0") != null)
     }
 
     @Test
@@ -40,10 +40,10 @@ class ProductDaoTest {
         val entity = ProductEntity("0", "", "", 0, false)
 
         productDao.insert(entity)
-        assert(productDao.get("0") != null)
+        assert(productDao.getImmediately("0") != null)
 
         productDao.update(entity.copy(name = "changed", isFavorite = true))
-        productDao.get("0").also {
+        productDao.getImmediately("0").also {
             assert(it != null)
             assert(it!!.name == "changed")
             assert(it.isFavorite)
@@ -54,10 +54,10 @@ class ProductDaoTest {
     fun test_delete() = runTest {
         val entity = ProductEntity("0", "", "", 0, false)
         productDao.insert(entity)
-        assert(productDao.get("0") != null)
+        assert(productDao.getImmediately("0") != null)
 
         productDao.delete(entity)
-        assert(productDao.get("0") == null)
+        assert(productDao.getImmediately("0") == null)
     }
 
     @Test

@@ -14,7 +14,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ProductHomeViewModel @Inject constructor(
-    categoryRepository: CategoryRepository
+   val categoryRepository: CategoryRepository
 ) : ViewModel() {
 
     val state: StateFlow<ProductHomeState> = categoryRepository.observeCategories()

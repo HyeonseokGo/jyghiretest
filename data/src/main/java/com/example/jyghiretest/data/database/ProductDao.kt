@@ -21,7 +21,10 @@ interface ProductDao {
     suspend fun delete(productEntity: ProductEntity)
 
     @Query("SELECT * FROM productentity  WHERE :key = `key`")
-    suspend fun get(key: String): ProductEntity?
+    suspend fun getImmediately(key: String): ProductEntity?
+
+    @Query("SELECT * FROM productentity  WHERE :key = `key`")
+    fun get(key: String): Flow<ProductEntity?>
 
     @Query("SELECT * FROM productentity")
     suspend fun getAllImmediately(): List<ProductEntity>

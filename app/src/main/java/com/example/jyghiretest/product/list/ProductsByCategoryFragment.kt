@@ -5,7 +5,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import com.example.jyghiretest.MainViewModel
 import com.example.jyghiretest.databinding.FragmentProductsByCategoryBinding
 import com.example.jyghiretest.safeCollect
 import dagger.hilt.android.AndroidEntryPoint
@@ -19,6 +21,7 @@ class ProductsByCategoryFragment : Fragment() {
     private val binding: FragmentProductsByCategoryBinding get() = _binding!!
 
     private val viewModel: ProductsByCategoryViewModel by viewModels()
+    private val navigator: MainViewModel by activityViewModels()
 
     private lateinit var adapter: ProductItemAdapter
 
@@ -44,7 +47,7 @@ class ProductsByCategoryFragment : Fragment() {
 
     private fun setUpRecyclerView() {
         adapter = ProductItemAdapter(
-            onItemClick = {},
+            onItemClick = navigator::navigateToProductDetail,
             onFavoriteClick = viewModel::toggleFavorite
         )
         binding.recyclerViewProducts.adapter = adapter

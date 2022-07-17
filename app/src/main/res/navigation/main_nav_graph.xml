@@ -13,7 +13,7 @@
 
         <action
             android:id="@+id/action_home_to_product_detail"
-            app:destination="@+id/productDetailFragment"/>
+            app:destination="@+id/productDetailFragment" />
 
     </fragment>
 
@@ -21,6 +21,13 @@
         android:id="@+id/productDetailFragment"
         android:name="com.example.jyghiretest.product.detail.ProductDetailFragment"
         android:label="@string/label_product_detail"
-        tools:layout="@layout/fragment_product_detail"/>
+        tools:layout="@layout/fragment_product_detail">
+
+        <argument
+            android:name="productKey"
+            android:defaultValue=""
+            app:argType="string" />
+
+    </fragment>
 
 </navigation>

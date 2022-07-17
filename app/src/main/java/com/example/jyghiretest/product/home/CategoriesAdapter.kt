@@ -19,6 +19,10 @@ class CategoriesAdapter(fragment: Fragment) : FragmentStateAdapter(fragment) {
     }
 
     fun updateCategories(categories: List<Category>) {
+        if (this.categories == categories) {
+            return
+        }
+
         this.categories = categories
         notifyDataSetChanged()
     }

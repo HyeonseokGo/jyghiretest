@@ -13,6 +13,7 @@ import javax.inject.Inject
 interface ProductRepository {
     fun observeProducts(): Flow<List<Product>>
     fun observeProductsByCategory(categoryKey: String): Flow<List<Product>>
+    fun observeProduct(key: String): Flow<Product?>
 }
 
 
@@ -34,6 +35,12 @@ class DefaultProductRepository @Inject constructor(
             it.map { entity ->
                 entity.toModel()
             }
+        }.flowOn(dispatcherProvider.io)
+    }
+
+    override fun observeProduct(key: String): Flow<Product?> {
+        return dao.get(key).map {
+            it?.toModel()
         }.flowOn(dispatcherProvider.io)
     }
 

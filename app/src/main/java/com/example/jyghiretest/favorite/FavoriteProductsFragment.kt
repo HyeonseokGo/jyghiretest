@@ -6,7 +6,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.widget.doOnTextChanged
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import com.example.jyghiretest.MainViewModel
 import com.example.jyghiretest.databinding.FragmentFavoriteProductsBinding
 import com.example.jyghiretest.product.list.ProductItemAdapter
 import com.example.jyghiretest.safeCollect
@@ -20,6 +22,8 @@ class FavoriteProductsFragment : Fragment() {
     private val binding: FragmentFavoriteProductsBinding get() = _binding!!
 
     private val viewModel: FavoriteProductsViewModel by viewModels()
+
+    private val navigator: MainViewModel by activityViewModels()
 
     private lateinit var adapter: ProductItemAdapter
 
@@ -53,7 +57,7 @@ class FavoriteProductsFragment : Fragment() {
 
     private fun setUpRecyclerView() {
         adapter = ProductItemAdapter(
-            onItemClick = {},
+            onItemClick = navigator::navigateToProductDetail,
             onFavoriteClick = viewModel::toggleFavorite
         )
         binding.recyclerViewFavoriteProducts.adapter = adapter

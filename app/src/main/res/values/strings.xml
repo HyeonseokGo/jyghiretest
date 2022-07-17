@@ -4,4 +4,5 @@
     <string name="label_product_detail">Product Detail</string>
     <string name="label_favorite_products">Favorites</string>
     <string name="label_product_home">List</string>
+    <string name="label_price">가격 : %1$s원</string>
 </resources>

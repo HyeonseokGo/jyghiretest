@@ -49,7 +49,7 @@ class ProductResponseToEntity @Inject constructor(
     private val productDao: ProductDao,
 ): Mapper<ProductResponse, ProductEntity> {
     override suspend fun invoke(from: ProductResponse): ProductEntity {
-        val productEntity = productDao.get(from.key)
+        val productEntity = productDao.getImmediately(from.key)
         val liked = productEntity?.isFavorite ?: false
 
         return ProductEntity(

@@ -4,6 +4,7 @@
     <bytecodeTargetLevel target="1.7">
       <module name="jyghiretest.app" target="11" />
       <module name="jyghiretest.data" target="11" />
+      <module name="jyghiretest.data-test" target="11" />
     </bytecodeTargetLevel>
   </component>
 </project>
