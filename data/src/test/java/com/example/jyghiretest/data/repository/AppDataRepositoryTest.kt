@@ -3,7 +3,7 @@ package com.example.jyghiretest.data.repository
 import android.content.Context
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
-import com.example.jyghiretest.data.TestDispatcherRule
+import com.example.jyghiretest.data.utils.TestDispatcherRule
 import com.example.jyghiretest.data.database.CategoryDao
 import com.example.jyghiretest.data.database.JygDatabase
 import com.example.jyghiretest.data.database.ProductDao
@@ -47,7 +47,7 @@ class AppDataRepositoryTest {
     }
 
     @Test
-    fun test_project_and_category_inserted() = runTest {
+    fun getAllImmediately_when_sync_then_isNotEmpty() = runTest {
         assert(categoryDao.getAllImmediately().isEmpty())
         assert(productDao.getAllImmediately().isEmpty())
 
@@ -62,7 +62,7 @@ class AppDataRepositoryTest {
     }
 
     @Test
-    fun test_delete_all_after_sync() = runTest {
+    fun getALlImmediately_when_sync_with_empty_then_isEmpty() = runTest {
         val productEntity1 = ProductEntity(
             key = "key0", categoryKey = "C0", name = "product1", price = 1000, isFavorite = false
         )
@@ -82,7 +82,7 @@ class AppDataRepositoryTest {
     }
 
     @Test
-    fun test_product_insert_1_update_2_delete_3() = runTest {
+    fun `새로운 아이템 1개는 Insert 기존 아이템 2개는 Update 나머지는 Delete 된다`() = runTest {
         val categoryKey = listOf("c0", "c1", "c2", "c3", "c4", "c5", "c6", "c7", "c8", "c9")
         val categoryEntities = categoryKey.mapIndexed { index, s ->
             CategoryEntity(key = s, name = "$index")
@@ -108,7 +108,7 @@ class AppDataRepositoryTest {
             ProductResponse(
                 key = s,
                 categoryKey = categoryKey[index],
-                name = "name${s}changed",
+                name = "${s}changed",
                 price = index * 1000,
             )
         }
@@ -133,7 +133,7 @@ class AppDataRepositoryTest {
     }
 
     @Test
-    fun test_product_with_same_key_name_and_price_changes() = runTest {
+    fun `같은 키를 가진 아이템은 Update 될 때 key와 isFavorite을 제외한 프로퍼티는 변경된다`() = runTest {
         val keys = listOf("0", "1", "2")
         val productEntities = keys.map {
             ProductEntity(
@@ -147,7 +147,7 @@ class AppDataRepositoryTest {
         val productResponse = keys.map {
             ProductResponse(
                 key = it,
-                categoryKey = "categoryKey$it",
+                categoryKey = "categoryKeyChanged",
                 name = "changed",
                 price = 1000
             )
@@ -162,12 +162,13 @@ class AppDataRepositoryTest {
         productDao.getAllImmediately().also { list ->
             list.all { it.price == 1000 }
             list.all { it.name == "changed" }
+            list.all { it.categoryKey == "categoryKeyChanged" }
             list.all { it.isFavorite }
         }
     }
 
     @Test
-    fun test_product_isFavorite_not_changes() = runTest {
+    fun `Update되어도 IsFavorite은 값을 유지한다`() = runTest {
         val productKeysIsFavoriteChanges = listOf("0", "2", "4")
         val productKeysIsFavoriteNotChanges = listOf("1", "3")
         val keys = productKeysIsFavoriteChanges + productKeysIsFavoriteNotChanges

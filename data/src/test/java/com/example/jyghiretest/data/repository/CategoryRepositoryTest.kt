@@ -4,7 +4,7 @@ import android.content.Context
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import app.cash.turbine.test
-import com.example.jyghiretest.data.TestDispatcherRule
+import com.example.jyghiretest.data.utils.TestDispatcherRule
 import com.example.jyghiretest.data.database.CategoryDao
 import com.example.jyghiretest.data.database.JygDatabase
 import com.example.jyghiretest.data.database.entity.CategoryEntity
@@ -53,7 +53,7 @@ class CategoryRepositoryTest {
     }
 
     @Test
-    fun test_observeCategories_updated() = runTest {
+    fun observeCategories_when_insertAll_then_updated() = runTest {
         val entity1 = CategoryEntity("C0", "1")
         val entity2 = CategoryEntity("C1", "1")
         val entity3 = CategoryEntity("C2", "1")

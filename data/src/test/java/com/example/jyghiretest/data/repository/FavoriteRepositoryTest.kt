@@ -4,7 +4,7 @@ import android.content.Context
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import app.cash.turbine.test
-import com.example.jyghiretest.data.TestDispatcherRule
+import com.example.jyghiretest.data.utils.TestDispatcherRule
 import com.example.jyghiretest.data.database.JygDatabase
 import com.example.jyghiretest.data.database.ProductDao
 import com.example.jyghiretest.data.database.entity.ProductEntity
@@ -39,7 +39,7 @@ class FavoriteRepositoryTest {
     }
 
     @Test
-    fun test_isFavorite_true_after_toggleFavorite() = runTest() {
+    fun isFavorite_when_toggleFavorite_then_true() = runTest() {
         val entity = ProductEntity("0", "", "", 100, false)
         productDao.insert(entity)
 
@@ -56,7 +56,7 @@ class FavoriteRepositoryTest {
     }
 
     @Test
-    fun test_searchFavoriteProducts_returns_3_with_keyword_키워드() = runTest {
+    fun `searchFavoriteProducts_when_keyword=키워드_then_returns_3_items`() = runTest {
         val entities = getSearchEntities()
         productDao.insertAll(*entities.toTypedArray())
 
@@ -68,7 +68,7 @@ class FavoriteRepositoryTest {
     }
 
     @Test
-    fun test_searchFavoriteProducts_changes_after_toggleFavorite() = runTest {
+    fun searchFavoriteProducts_when_toggleFavorite_then_updated() = runTest {
         val entity1 = ProductEntity("0", "", "", 100, false)
         val entity2 = ProductEntity("1", "", "", 100, false)
 
@@ -77,10 +77,10 @@ class FavoriteRepositoryTest {
         repository.searchFavoriteProducts("").test {
             val beforeToggled = awaitItem()
             assert(beforeToggled.isEmpty())
-
-            repository.toggleFavorite("0")
-            repository.toggleFavorite("1")
-
+        }
+        repository.toggleFavorite("0")
+        repository.toggleFavorite("1")
+        repository.searchFavoriteProducts("").test {
             val afterToggled = awaitItem()
             assert(afterToggled.size == 2)
             assert(afterToggled.all { it.isFavorite })

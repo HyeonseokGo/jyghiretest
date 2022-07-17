@@ -1,4 +1,4 @@
-package com.example.jyghiretest.data
+package com.example.jyghiretest.data.utils
 
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers

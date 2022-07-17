@@ -4,7 +4,7 @@ import android.content.Context
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import app.cash.turbine.test
-import com.example.jyghiretest.data.TestDispatcherRule
+import com.example.jyghiretest.data.utils.TestDispatcherRule
 import com.example.jyghiretest.data.database.JygDatabase
 import com.example.jyghiretest.data.database.ProductDao
 import com.example.jyghiretest.data.database.entity.ProductEntity
@@ -65,7 +65,7 @@ class ProductRepositoryTest {
     }
 
     @Test
-    fun test_observeProductsByCategory_updated() = runTest {
+    fun observeProductsByCategory_when_insert_then_updated() = runTest {
         val categoryKey = "testKey"
         val entities = listOf(
             ProductEntity(
@@ -120,7 +120,7 @@ class ProductRepositoryTest {
     }
 
     @Test
-    fun test_observeProducts_updated() = runTest {
+    fun observeProducts_when_insertAll_then_updated() = runTest {
         val categoryKey = "testKey"
         val entities = listOf(
             ProductEntity(

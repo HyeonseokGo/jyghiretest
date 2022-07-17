@@ -23,14 +23,14 @@ class DatabaseSyncerTest {
     }
 
     @Test
-    fun test_insert_all() = runTest {
+    fun test_all_items_inserted() = runTest {
         syncer.runTest(fakeCategoryResponses, listOf()) { inserted, _, _ ->
             assert(inserted.size == fakeCategoryResponses.size)
         }
     }
 
     @Test
-    fun test_delete_all() = runTest {
+    fun test_all_items_deleted() = runTest {
         syncer.runTest(listOf(), fakeCategoryResponses.toEntities()) { _, updated, deleted ->
             assert(deleted.size == fakeCategoryResponses.size)
             assert(updated.isEmpty())
@@ -38,7 +38,7 @@ class DatabaseSyncerTest {
     }
 
     @Test
-    fun test_delete_and_left_3() = runTest {
+    fun `같은 키를 가진 아이템 3개는 Update 나머지는 Delete 된다`() = runTest {
         val networks = fakeCategoryResponses.take(3)
         val expectedDeletedCount = fakeCategoryResponses.size - 3
 
@@ -50,7 +50,7 @@ class DatabaseSyncerTest {
     }
 
     @Test
-    fun test_update_all() = runTest {
+    fun `같은 키를 가진 아이템들이 주어지면 모두 update 된다`() = runTest {
         syncer.runTest(
             fakeCategoryResponses,
             fakeCategoryResponses.toEntities()
@@ -62,7 +62,7 @@ class DatabaseSyncerTest {
     }
 
     @Test
-    fun test_insert_1_update_2_delete_3() = runTest {
+    fun `새로운 아이템과 기존 아이템이 network로 주어지면, 기존 Local은 삭제되고 새로운 아이템은 Insert 기존 아이템은 Update 된다`() = runTest {
         val insert1 = CategoryResponse("insert1", "")
         val update1Network = CategoryResponse("update1", "updated")
         val update2Network = CategoryResponse("update2", "updated")

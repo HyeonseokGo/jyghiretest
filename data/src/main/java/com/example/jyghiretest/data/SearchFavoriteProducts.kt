@@ -3,10 +3,7 @@ package com.example.jyghiretest.data
 import com.example.jyghiretest.data.repository.FavoriteRepository
 import com.example.jyghiretest.data.store.SearchQueryStore
 import kotlinx.coroutines.channels.BufferOverflow
-import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.debounce
-import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.*
 import javax.inject.Inject
 
 class SearchFavoriteProducts @Inject constructor(
@@ -23,10 +20,9 @@ class SearchFavoriteProducts @Inject constructor(
     val flow = triggerFlow
         .debounce(300)
         .distinctUntilChanged()
-        .flatMapLatest {
-            searchQueryStore.save(it)
-            repository.searchFavoriteProducts(it)
-        }.distinctUntilChanged()
+        .onEach(searchQueryStore::save)
+        .flatMapLatest(repository::searchFavoriteProducts)
+        .distinctUntilChanged()
 
     operator fun invoke(keyword: String) {
         triggerFlow.tryEmit(keyword)
