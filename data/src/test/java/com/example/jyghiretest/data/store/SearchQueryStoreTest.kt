@@ -12,12 +12,12 @@ import org.robolectric.RobolectricTestRunner
 @RunWith(RobolectricTestRunner::class)
 class SearchQueryStoreTest {
 
-    private lateinit var store: SearchQueryStore
+    private lateinit var store: DataStoreSearchQueryStore
 
     @Before
     fun setUp() {
         val context = ApplicationProvider.getApplicationContext<Context>()
-        store = SearchQueryStore(
+        store = DataStoreSearchQueryStore(
             context = context
         )
     }

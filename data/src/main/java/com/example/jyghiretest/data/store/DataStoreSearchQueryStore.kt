@@ -12,22 +12,27 @@ import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 import javax.inject.Singleton
 
-@Singleton
-class SearchQueryStore @Inject constructor(
+interface SearchQueryStore {
+    fun lastSearchQuery(): Flow<String>
+    suspend fun save(keyword: String)
+}
+
+
+class DataStoreSearchQueryStore @Inject constructor(
     @ApplicationContext private val context: Context
-) {
+): SearchQueryStore {
 
     private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "search_query")
 
     private val LAST_SEARCH_QUERY = stringPreferencesKey("example_counter")
 
-    suspend fun save(keyword: String) {
+    override suspend fun save(keyword: String) {
         context.dataStore.edit { searchQuery ->
             searchQuery[LAST_SEARCH_QUERY] = keyword
         }
     }
 
-    fun lastSearchQuery(): Flow<String> = context.dataStore.data.map { searchQuery ->
+    override fun lastSearchQuery(): Flow<String> = context.dataStore.data.map { searchQuery ->
         searchQuery[LAST_SEARCH_QUERY] ?: ""
     }
 

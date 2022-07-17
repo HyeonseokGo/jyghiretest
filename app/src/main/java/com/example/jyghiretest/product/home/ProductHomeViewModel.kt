@@ -6,15 +6,14 @@ import com.example.jyghiretest.WhileUiSubscribed
 import com.example.jyghiretest.data.repository.CategoryRepository
 import com.example.jyghiretest.model.Category
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 
 @HiltViewModel
 class ProductHomeViewModel @Inject constructor(
-   val categoryRepository: CategoryRepository
+   categoryRepository: CategoryRepository
 ) : ViewModel() {
 
     val state: StateFlow<ProductHomeState> = categoryRepository.observeCategories()

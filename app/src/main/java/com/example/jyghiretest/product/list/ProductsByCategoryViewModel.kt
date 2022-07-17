@@ -15,7 +15,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ProductsByCategoryViewModel @Inject constructor(
-    private val productRepository: ProductRepository,
+    productRepository: ProductRepository,
     private val favoriteRepository: FavoriteRepository,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {

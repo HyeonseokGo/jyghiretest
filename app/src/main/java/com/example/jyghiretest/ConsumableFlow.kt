@@ -8,7 +8,6 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.FlowCollector
 import kotlinx.coroutines.launch
 
-interface Consumable
 
 interface ConsumableFlow<T>: Flow<T> {
     fun consume()

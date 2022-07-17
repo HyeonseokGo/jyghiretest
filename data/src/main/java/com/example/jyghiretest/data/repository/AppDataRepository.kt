@@ -1,6 +1,5 @@
 package com.example.jyghiretest.data.repository
 
-import android.util.Log
 import com.example.jyghiretest.data.database.CategoryDao
 import com.example.jyghiretest.data.database.ProductDao
 import com.example.jyghiretest.data.di.CategoryDatabaseSyncer
@@ -23,7 +22,6 @@ class DefaultAppDataRepository @Inject constructor(
 
     override suspend fun sync(): Result<Unit> {
         return kotlin.runCatching {
-            Log.e(this::class.simpleName, "fetch()")
             appDataFetcher.fetch()
         }.onSuccess {
             val (categories, products) = it
