@@ -2,30 +2,22 @@ package com.example.jyghiretest.data.utils
 
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.setMain
-import org.junit.rules.TestRule
+import org.junit.rules.TestWatcher
 import org.junit.runner.Description
-import org.junit.runners.model.Statement
 
 class TestDispatcherRule(
      val dispatcher: CoroutineDispatcher = UnconfinedTestDispatcher()
-) : TestRule {
+) : TestWatcher() {
 
-    override fun apply(base: Statement, description: Description): Statement {
-        return object : Statement() {
-            override fun evaluate() {
-                Dispatchers.setMain(dispatcher)
-                try {
-                    base.evaluate()
-                } finally {
-                    Dispatchers.resetMain()
-                }
-            }
+    override fun starting(description: Description) {
+        Dispatchers.setMain(dispatcher)
+    }
 
-        }
+    override fun finished(description: Description) {
+        Dispatchers.resetMain()
     }
 
 }

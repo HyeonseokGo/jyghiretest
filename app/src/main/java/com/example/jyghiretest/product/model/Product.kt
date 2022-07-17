@@ -4,5 +4,5 @@ import com.example.jyghiretest.model.Product
 import java.text.DecimalFormat
 
 fun Product.formattedPrice(): String {
-    return DecimalFormat("#.##").format(price)
+    return DecimalFormat("#,###").format(price)
 }

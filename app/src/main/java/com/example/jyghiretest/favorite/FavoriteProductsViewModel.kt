@@ -6,23 +6,26 @@ import com.example.jyghiretest.WhileUiSubscribed
 import com.example.jyghiretest.asConsumableFlow
 import com.example.jyghiretest.data.repository.FavoriteRepository
 import com.example.jyghiretest.data.SearchFavoriteProducts
+import com.example.jyghiretest.data.store.DataStoreSearchQueryStore
 import com.example.jyghiretest.data.store.SearchQueryStore
 import com.example.jyghiretest.model.Product
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+import javax.inject.Named
 
 @HiltViewModel
 class FavoriteProductsViewModel @Inject constructor(
     private val favoriteRepository: FavoriteRepository,
     private val searchFavoriteProducts: SearchFavoriteProducts,
-    private val searchQueryStore: SearchQueryStore,
+    dataStoreSearchQueryStore: SearchQueryStore,
+    @Named("SearchQueryDebounce") SEARCH_QUERY_DEBOUNCE: Long
 ) : ViewModel() {
 
     private val searchQuery = MutableStateFlow("")
 
-    val lastSearchQuery = searchQueryStore.lastSearchQuery().asConsumableFlow()
+    val lastSearchQuery = dataStoreSearchQueryStore.lastSearchQuery().asConsumableFlow()
 
     val state: StateFlow<FavoriteProductState> =
         searchFavoriteProducts.flow.map(::FavoriteProductState)
@@ -34,7 +37,7 @@ class FavoriteProductsViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-            searchQuery.debounce(200)
+            searchQuery.debounce(SEARCH_QUERY_DEBOUNCE)
                 .distinctUntilChanged()
                 .onEach {
                     searchFavoriteProducts(it)

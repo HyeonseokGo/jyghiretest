@@ -18,7 +18,6 @@ class SearchFavoriteProducts @Inject constructor(
     )
 
     val flow = triggerFlow
-        .debounce(300)
         .distinctUntilChanged()
         .onEach(searchQueryStore::save)
         .flatMapLatest(repository::searchFavoriteProducts)
