@@ -32,8 +32,12 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
+    composeOptions {
+        kotlinCompilerExtensionVersion '1.2.0-rc02'
+    }
     buildFeatures {
         viewBinding = true
+        compose = true
     }
 }
 
@@ -42,6 +46,9 @@ dependencies {
     implementation project(":model")
     implementation project(":data")
     implementation project(":data-test")
+
+    def activity_version = "1.5.0"
+    implementation "androidx.activity:activity-ktx:$activity_version"
 
     implementation 'androidx.core:core-ktx:1.8.0'
     implementation 'androidx.appcompat:appcompat:1.4.2'
@@ -72,6 +79,14 @@ dependencies {
 
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.2'
 
+    //compose
+    implementation 'androidx.activity:activity-compose:1.5.0'
+    implementation 'androidx.compose.material:material:1.1.1'
+    implementation 'androidx.compose.animation:animation:1.1.1'
+    implementation 'androidx.compose.ui:ui-tooling:1.1.1'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-compose:2.5.0'
+
+    implementation "com.google.android.material:compose-theme-adapter:1.1.14"
 
     testImplementation 'junit:junit:4.13.2'
     testImplementation 'org.robolectric:robolectric:4.8.1'
@@ -88,4 +103,7 @@ dependencies {
 
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
+
+    androidTestImplementation 'androidx.compose.ui:ui-test-junit4:1.1.1'
+
 }

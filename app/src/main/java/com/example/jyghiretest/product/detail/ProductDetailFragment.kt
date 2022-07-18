@@ -5,16 +5,33 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
-import androidx.fragment.app.viewModels
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.fragment.findNavController
 import com.example.jyghiretest.R
 import com.example.jyghiretest.databinding.FragmentProductDetailBinding
 import com.example.jyghiretest.model.Product
 import com.example.jyghiretest.product.model.formattedPrice
-import com.example.jyghiretest.safeCollect
+import com.google.android.material.composethemeadapter.MdcTheme
 import dagger.hilt.android.AndroidEntryPoint
-import java.text.DecimalFormat
+import androidx.lifecycle.viewmodel.compose.viewModel
 
 @AndroidEntryPoint
 class ProductDetailFragment : Fragment() {
@@ -22,7 +39,6 @@ class ProductDetailFragment : Fragment() {
     private var _binding: FragmentProductDetailBinding? = null
     private val binding: FragmentProductDetailBinding get() = _binding!!
 
-    private val viewModel: ProductDetailViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -35,9 +51,18 @@ class ProductDetailFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        setUpToolbar()
-        setUpImageButton()
-        observeViewModel()
+        binding.composeView.setContent {
+            MdcTheme {
+                val viewModel: ProductDetailViewModel = viewModel()
+                val state by viewModel.state.collectAsState()
+                ProductDetailScreen(
+                    state = state,
+                    onBackButtonClick = { findNavController().popBackStack() },
+                    onFavoriteClick = { viewModel.toggleFavorite() }
+                )
+            }
+        }
+
     }
 
     override fun onDestroyView() {
@@ -45,38 +70,81 @@ class ProductDetailFragment : Fragment() {
         super.onDestroyView()
     }
 
-    private fun setUpToolbar() {
-        binding.toolbar.setNavigationOnClickListener {
-            findNavController().popBackStack()
-        }
+}
+
+@Composable
+fun ProductDetailScreen(
+    state: ProductDetailState,
+    onBackButtonClick: () -> Unit,
+    onFavoriteClick: () -> Unit
+) {
+    when (state) {
+        is ProductDetailState.Success ->
+            ProductDetailContent(
+                state = state,
+                onBackButtonClick = onBackButtonClick,
+                onFavoriteClick = onFavoriteClick
+            )
+        else -> {}
     }
 
-    private fun setUpImageButton() {
-        binding.imageButtonFavorite.setOnClickListener {
-            viewModel.toggleFavorite()
-        }
-    }
+}
 
-    private fun observeViewModel() {
-        viewModel.state.safeCollect(viewLifecycleOwner) {
-            when (it) {
-                is ProductDetailState.Success -> {
-                    updateUI(it.product)
+@Composable
+fun ProductDetailContent(
+    state: ProductDetailState.Success,
+    onBackButtonClick: () -> Unit,
+    onFavoriteClick: () -> Unit
+) {
+    Scaffold(
+        topBar = {
+            TopAppBar(
+                backgroundColor = Color.White,
+                title = { Text(text = state.product.name) },
+                navigationIcon = {
+                    IconButton(onClick = onBackButtonClick) {
+                        Icon(Icons.Default.ArrowBack, contentDescription = "back")
+                    }
                 }
-                ProductDetailState.Error -> {}
-                ProductDetailState.Loading -> {}
+            )
+        }
+    ) {
+        Row(
+            modifier = Modifier
+                .padding(it)
+                .fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Text(
+                modifier = Modifier.padding(20.dp),
+                text = stringResource(id = R.string.label_price, state.product.formattedPrice()),
+                fontSize = 16.sp
+            )
+            IconButton(
+                modifier = Modifier.padding(16.dp),
+                onClick = onFavoriteClick
+            ) {
+                val resourceId =
+                    if (state.product.isFavorite) R.drawable.ic_baseline_favorite_checked_24 else R.drawable.ic_baseline_favorite_unchecked_24
+                Icon(
+                    painter = painterResource(id = resourceId),
+                    contentDescription = "favorite",
+                    tint = Color.Unspecified
+                )
             }
         }
     }
+}
 
-    private fun updateUI(product: Product) {
-        binding.toolbar.title = product.name
-        binding.textViewPrice.text = getString(R.string.label_price, product.formattedPrice())
 
-        val drawableRes =
-            if (product.isFavorite) R.drawable.ic_baseline_favorite_checked_24 else R.drawable.ic_baseline_favorite_unchecked_24
-        val drawable = ContextCompat.getDrawable(binding.root.context, drawableRes)
-        binding.imageButtonFavorite.setImageDrawable(drawable)
-    }
-
+@Preview
+@Composable
+fun ProductDetailScreenPreview() {
+    val state = ProductDetailState.Success(
+        product = Product(
+            "", "", "test", 1000, true
+        )
+    )
+    ProductDetailScreen(state, {}, {})
 }
